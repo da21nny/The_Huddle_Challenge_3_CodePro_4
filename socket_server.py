@@ -12,11 +12,12 @@ def main():
         server.bind((server_host, server_port))
         server.listen()
         print(f"Server iniciado en {server_host}:{server_port}")
+        server.setblocking(False)
 
         while True:
             client_socket, address = server.accept()
             print(f"Conexion entrante desde {address[0]}:{address[1]}")
-            pass
+            #pass
 
     except KeyboardInterrupt:
         print("Server se esta apagando.")

@@ -12,11 +12,16 @@ def main():
         server.bind((server_host, server_port))
         server.listen()
         print(f"Server iniciado en {server_host}:{server_port}")
-        server.setblocking(False)
+        client_socket, address = server.accept()
+        print(f"Conexion entrante desde {address[0]}:{address[1]}")
+        name = client_socket.recv(50).decode("utf-8")
 
         while True:
-            client_socket, address = server.accept()
-            print(f"Conexion entrante desde {address[0]}:{address[1]}")
+            msg = client_socket.recv(1024).decode("utf-8")
+            if msg.lower() == "salir":
+                client_socket.send("close".encode("utf-8"))
+                break
+            print(f"{name}: {msg}")
             #pass
 
     except KeyboardInterrupt:

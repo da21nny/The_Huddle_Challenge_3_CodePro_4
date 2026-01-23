@@ -7,7 +7,15 @@ def main():
 
     try:
         client.connect((server_ip, server_port))
-
+        name = input("Introduce tu nick: ")
+        client.send(name.encode("utf-8"))
+        while True:
+            msg = input("Ingrese mensaje: ")
+            client.send(msg.encode("utf-8"))
+            if msg.lower() == "salir":
+                print("saliendo")
+                break
+        
     except KeyboardInterrupt:
         print("saliendo")
 

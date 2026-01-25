@@ -1,7 +1,48 @@
 import socket
 import threading
 
-list_client= []
+client_list = []
+client_info = {} 
+
+def broadcast(message, client_emisor):
+    for client in client_list:
+        if client != client_emisor:
+            try:
+                client.send(message.encode("utf-8"))
+
+            except:
+                client.close()
+                if client in client_list:
+                    client_list.remove(client)
+    
+
+def manage_client(client_socket, client_address):
+    name = client_socket.recv(50).decode("utf-8")
+    client_info[client_socket] = name
+    print(f"Cliente {name} conectado desde: {client_address}")
+    client_list.append(client_socket)
+    print(f"Total de clientes: {len(client_list)}")
+
+    try:
+        while True:
+            message = client_socket.recv(1024).decode("utf-8")
+
+            if not message:
+                break
+
+            print(F"{name}: {message}")
+            
+            broadcast(f"{name}: {message}", client_socket)            
+
+    except Exception as e:
+        print(f"Error {e}")
+    
+    finally:
+        broadcast(f"-{name} se desconecto", client_socket)
+        client_socket.close()
+        if client_socket in client_list:
+            client_list.remove(client_socket)
+
 
 def main():
     server_host = "127.0.0.1"
@@ -12,18 +53,13 @@ def main():
         server.bind((server_host, server_port))
         server.listen()
         print(f"Server iniciado en {server_host}:{server_port}")
-        client_socket, address = server.accept()
-        print(f"Conexion entrante desde {address[0]}:{address[1]}")
-        name = client_socket.recv(50).decode("utf-8")
 
         while True:
-            msg = client_socket.recv(1024).decode("utf-8")
-            if msg.lower() == "salir":
-                client_socket.send("close".encode("utf-8"))
-                break
-            print(f"{name}: {msg}")
-            #pass
-
+            client_socket, client_address = server.accept()
+            client_thread = threading.Thread(target=manage_client, args=(client_socket, client_address))
+            client_thread.daemon = True
+            client_thread.start()
+            
     except KeyboardInterrupt:
         print("Server se esta apagando.")
     
@@ -31,4 +67,4 @@ def main():
         server.close()
         print("Server apagado.")
 
-main()
+main()              

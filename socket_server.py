@@ -2,7 +2,6 @@ import socket
 import threading
 
 client_list = []
-client_info = {} 
 
 def broadcast(message, client_emisor):
     for client in client_list:
@@ -18,7 +17,6 @@ def broadcast(message, client_emisor):
 
 def manage_client(client_socket, client_address):
     name = client_socket.recv(50).decode("utf-8")
-    client_info[client_socket] = name
     print(f"Cliente {name} conectado desde: {client_address}")
     client_list.append(client_socket)
     print(f"Total de clientes: {len(client_list)}")

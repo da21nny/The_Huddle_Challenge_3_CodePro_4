@@ -38,7 +38,7 @@ def manage_client(client_socket, client_address, client_list):
                 
     finally:
         broadcast(f"-{name} se desconecto", client_socket, client_list)
-        print(f"\n{name} se desconecto del sever.\nTotal de Clientes: {len(client_list)}")
+        print(f"\n{name} se desconecto del server.\nTotal de Clientes: {len(client_list)}")
         client_socket.close()
         if client_socket in client_list:
             client_list.remove(client_socket)

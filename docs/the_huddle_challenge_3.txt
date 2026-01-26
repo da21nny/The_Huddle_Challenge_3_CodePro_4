@@ -1,0 +1,106 @@
+1. Escenario & Reto
+Era una tarde normal. Vos, sentado, feliz de haber refactorizado tu calculadora de rutas. Pensabas que el mundo estaba en paz.
+
+Hasta que…
+todo se cayó. 🫠
+
+Literalmente.
+Redes globales: fuera de servicio.
+Wi-Fi: desaparecido.
+Slack: en coma.
+Solo un mensaje parpadeaba en tu pantalla negra:
+
+"El mundo ha olvidado cómo hablar. Solo vos podés reescribir el protocolo.
+Bienvenido al Challenge 4."
+
+Ahora estás en una misión:
+reconstruir la comunicación mundial desde cero, como una especie de héroe de red…
+con menos presupuesto y más bugs.
+
+Tu tarea: crear una app de chat en tiempo real con sockets, sin frameworks mágicos, sin bibliotecas de lujo. Solo vos, la terminal, y un servidor que probablemente crashee un par de veces.
+
+2. Habilidades que Vas a Necesitar
+🧠 Conocimientos básicos de sockets y programación de red.
+
+🪛 Capacidad para manejar múltiples clientes sin explotar tu CPU.
+
+💬 Lógica de broadcast, porque si alguien dice “hola”, todos deben sufrirlo.
+
+🧯 Manejo de errores de red, porque se va a romper. Te lo prometemos.
+
+🖥️ Saber trabajar en stdin/stdout como si fuera 1995.
+
+3. Requisitos Obligatorios (Tu Mapa de Supervivencia Digital)
+1. Servidor de Chat 🧑‍💻🧑‍💻🧑‍💻
+
+Creá un socket de servidor que acepte múltiples conexiones.
+
+Usá selectores o cualquier técnica para manejar concurrencia sin drama.
+
+Implementá broadcast: si un cliente habla, todos escuchan. No hay secretos.
+
+Mantené una lista activa de conexiones. Si alguien se va, borralo con dignidad.
+
+2. Cliente de Chat 🫣
+
+Creá un cliente por terminal. No hay interfaz fancy. Solo texto crudo.
+
+Usá sockets para enviar y recibir. Mostralo todo en tiempo real.
+
+Permití que el usuario hable y escuche al mismo tiempo.
+
+Usá estructuras simples para manejar mensajes. Nada de lujos.
+
+3. Errores y Caos 🌪️
+
+Manejá desconexiones inesperadas con elegancia (o al menos sin crashear).
+
+Detectá cuando un socket está muerto y sacalo de la lista.
+
+Implementá reintentos si algo falla. A veces internet es drama.
+
+Tu servidor debe seguir funcionando aunque la mitad de los clientes se vaya a llorar.
+
+4. Entregables, Reglas y Bonus Opcionales
+Entregables:
+
+Código del servidor y del cliente.
+
+Un README que responda a estas preguntas:
+
+¿Quién sos después de este reto?
+
+¿Cómo sobrevivió tu aplicación?
+
+¿Qué aprendiste cuando todo se rompió?
+
+Reglas:
+
+Nada de bibliotecas de terceros para manejar sockets.
+
+El chat tiene que funcionar con varios clientes al mismo tiempo.
+
+El mensaje tiene que fluir. Si hay lag, no es un chat. Es una carta medieval.
+
+Bonus Opcionales (Nivel Hacker):
+
+Implementá nombres de usuario para que no todos sean “cliente sin nombre”.
+
+Permití comandos como /exit, /mute, /help.
+
+Agregá timestamps, porque saber cuándo alguien dijo “JAJA” es importante.
+
+Logeá los mensajes en un archivo por si necesitás un drama legal.
+
+Hacé una versión que funcione por Wi-Fi local en un café, así podés espiar a todos.
+
+🚀 ¡Conectá, o callá para siempre!
+En este mundo post-red, no hay Google Meet.
+No hay Zoom.
+Solo vos y un socket abierto al vacío.
+
+Construí tu propio sistema de comunicación.
+Hacelo simple, brutal y funcional.
+
+Porque si la humanidad va a volver a hablar…
+va a ser gracias a tu código. 🧃📡

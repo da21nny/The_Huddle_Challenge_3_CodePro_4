@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import sys
 
 # Funcion para recibir mensajes del server.
 def receive_message(client_socket):
@@ -8,14 +9,17 @@ def receive_message(client_socket):
         try:
             message = client_socket.recv(1024).decode("utf-8")
             if message:
-                print("\n" + message)
+                sys.stdout.write("\r\033[K")
+                print(message)
+                sys.stdout.write("Ingrese mensaje: ")
+                sys.stdout.flush()
             else:
                 print("\n Cerrando Conexion")
                 client_socket.close()
                 break
 
-        except:
-            print("\n Error: Se perdio conexion con el servidor")
+        except Exception as e:
+            print(f"\nError de conexion: {e}")
             client_socket.close()
             break
 
@@ -38,44 +42,54 @@ def send_message(client_socket):
 def main():
     server_ip = "127.0.0.1"
     server_port = 8000
-    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.settimeout(5)
+    
+    while True:
+        client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        client_socket.settimeout(5)
 
-    reconnect = 5
-    for iterator in range(reconnect):
+        connected = False
+        reconnect = 5
+        for iterator in range(reconnect):
+            try:
+                print(f"Conectando: Intento {iterator + 1} de {reconnect}...")
+                client_socket.connect((server_ip, server_port))
+                connected = True
+                break
+
+            except Exception as e:
+                print(f"Error: {e}")
+                time.sleep(2)
+
+        if not connected:
+            print("\n Error: Server no disponible. Intentando en 3 segundos...")
+            time.sleep(3)
+            continue
+        
+        client_socket.settimeout(None)
+        print("\n Conectado al Server.")
+
         try:
-            print(f"Conectando: Intento {iterator + 1} de {reconnect}...")
-            client_socket.connect((server_ip, server_port))
+            name = input("Introduce tu nick: ")
+            if not name: name = "Anonimo"
+            client_socket.send(name.encode("utf-8"))    
+
+            thread_send = threading.Thread(target=send_message, args=(client_socket,))
+            thread_send.daemon = True
+            thread_send.start()
+
+            thread_receive = threading.Thread(target=receive_message, args=(client_socket,))
+            thread_receive.daemon = True
+            thread_receive.start()
+
+            thread_send.join()
+
             break
 
         except Exception as e:
             print(f"Error: {e}")
-            time.sleep(2)
 
-    if not client_socket:
-        print("\n Error: No se pudo conectar al server.")
-        return
-    
-    client_socket.settimeout(None)
-    print("\n Conectado al Server.")
-
-    try:
-        name = input("Introduce tu nick: ")
-        client_socket.send(name.encode("utf-8"))    
-        
-        thread_send = threading.Thread(target=send_message, args=(client_socket,))
-        thread_send.daemon = True
-        thread_send.start()
-        
-        thread_receive = threading.Thread(target=receive_message, args=(client_socket,))
-        thread_receive.daemon = True
-        thread_receive.start()
-      
-    except Exception as e:
-        print(f"Error: {e}")
-
-    finally:
-        client_socket.close()
-        print("\n Desconectado!")
+        finally:
+            client_socket.close()
+            print("\n Desconectado!")
 
 main() # Ejecuta el main principal.

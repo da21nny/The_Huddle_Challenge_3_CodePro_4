@@ -3,47 +3,55 @@ import threading
 import time
 import sys
 
+user_wants_exit = False
+
 # Funcion para recibir mensajes del server.
 def receive_message(client_socket):
+    global user_wants_exit
     while True:
         try:
             message = client_socket.recv(1024).decode("utf-8")
             if message:
                 sys.stdout.write("\r\033[K")
                 print(message)
-                sys.stdout.write("Ingrese mensaje: ")
+                sys.stdout.write("Mensaje (exit para salir): ")
                 sys.stdout.flush()
             else:
-                print("\n Cerrando Conexion")
+                if not user_wants_exit:
+                    print("\n El server cerro Conexion.")
                 client_socket.close()
                 break
 
-        except Exception as e:
-            print(f"\nError de conexion: {e}")
-            client_socket.close()
+        except Exception:
+            if not user_wants_exit:
+                client_socket.close()
             break
 
 # Funcion para enviar mensajes al server.
 def send_message(client_socket):
+    global user_wants_exit
     try:
         while True:
-            message = input("Ingrese mensaje: ")
+            message = input("Mensaje (exit para salir): ")
 
-            if message.lower() == "salir":
-                print("\n Saliendo del server")
+            if message.lower() == "exit":
+                user_wants_exit = True
+                print("\n Saliendo del server.")
                 break
             
             client_socket.send(message.encode("utf-8"))
     
     except Exception:
         print("Error: Mensaje no enviado")
-
+        
 # Funcion principal donde se conecta al server y crear hilos de envio y recibo de mensajes.
 def main():
+    global user_wants_exit
     server_ip = "127.0.0.1"
     server_port = 8000
     
     while True:
+        user_wants_exit = False
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         client_socket.settimeout(5)
 
@@ -56,12 +64,12 @@ def main():
                 connected = True
                 break
 
-            except Exception as e:
-                print(f"Error: {e}")
+            except Exception:
+                print(f"Error: No se pudo conectar al server")
                 time.sleep(2)
 
         if not connected:
-            print("\n Error: Server no disponible. Intentando en 3 segundos...")
+            print("\n Error: Server no disponible. Reconectando...")
             time.sleep(3)
             continue
         
@@ -83,13 +91,22 @@ def main():
 
             thread_send.join()
 
-            break
+            if user_wants_exit:
+                client_socket.close()
+                break
+            else:
+                print("Reconectando con el server...")
+                client_socket.close()
+                time.sleep(2)
+                continue
 
-        except Exception as e:
-            print(f"Error: {e}")
+        except KeyboardInterrupt:
+            client_socket.close()
+            print("Desconexion forzada...")
+            break
 
         finally:
             client_socket.close()
-            print("\n Desconectado!")
 
-main() # Ejecuta el main principal.
+if __name__ == "__main__":
+    main() # Ejecuta el main principal.

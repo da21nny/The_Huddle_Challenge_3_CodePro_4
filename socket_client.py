@@ -14,7 +14,7 @@ def receive_message(client_socket):
             if message:
                 sys.stdout.write("\r\033[K")
                 print(message)
-                sys.stdout.write("Mensaje (exit para salir): ")
+                sys.stdout.write("Mensaje (/salir): ")
                 sys.stdout.flush()
             else:
                 if not user_wants_exit:
@@ -32,9 +32,9 @@ def send_message(client_socket):
     global user_wants_exit
     try:
         while True:
-            message = input("Mensaje (exit para salir): ")
+            message = input("Mensaje (/salir): ")
 
-            if message.lower() == "exit":
+            if message.lower() == "/salir":
                 user_wants_exit = True
                 print("\n Saliendo del server.")
                 break

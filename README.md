@@ -16,11 +16,11 @@ El proyecto presenta 2 script principales:
     El encargado de crear hilos de clientes, enviar y recibir mensajes simultaneamente en la terminal.
 
 ## ⚙️ Detalles Tecnicos.
-**Modelo:** Server-Client.
-**Protocolo:** TCP/IP - IPv4.
-**Codificacion:** UTF-.
-**Lenguaje:** Python 3.14.
-**Modulos:** Socket, Threading, Time, Sys (stdout).
+- **Modelo:** Server-Client.
+- **Protocolo:** TCP/IP - IPv4.
+- **Codificacion:** UTF-.
+- **Lenguaje:** Python 3.14.
+- **Modulos:** Socket, Threading, Time, Sys (stdout).
 
 ## ✅ Funcionamiento.
 ### Server

@@ -7,7 +7,7 @@ Implementa un Modelo Server-Cliente en donde se inicia el server y entra en modo
 Una vez conectados, se identifican con un Nick para que puedan saber con quienes estan hablando.
 El server hace de intermediario, recibe el mensaje de los clientes y luego comparte al resto excepto el que haya enviado.
 
-## Arquitectura:
+## 🏗️ Arquitectura:
 El proyecto presenta 2 script principales:
 - Socket_server.py:
     Es el encargado de aceptar las conexiones, administrar los clientes y retransmitir los mensajes a los demas clientes (Broadcast).
@@ -15,14 +15,14 @@ El proyecto presenta 2 script principales:
 - Socket_client.py:
     El encargado de crear hilos de clientes, enviar y recibir mensajes simultaneamente en la terminal.
 
-## Detalles Tecnicos.
+## ⚙️ Detalles Tecnicos.
 **Modelo:** Server-Client.
 **Protocolo:** TCP/IP - IPv4.
 **Codificacion:** UTF-.
 **Lenguaje:** Python 3.14.
 **Modulos:** Socket, Threading, Time, Sys (stdout).
 
-## Funcionamiento.
+## ✅ Funcionamiento.
 ### Server
 - Crea un Socket TCP - IPv4  (socket.AF_INET, socket.SOCK_STREAM).
 - Se asocia a una IP y Puerto (IP: 127.0.0.1 - Puerto: 8000)
@@ -37,7 +37,7 @@ El proyecto presenta 2 script principales:
 - Los mensajes son codificado y descodificado con el estandar UTF-8.
 - Permite desconectarse con /salir o de forma forzada con CTRL + C.
 
-### Funcionamiento
+### ▶️ Ejecucion:
 1. Iniciar el Server:
 python socket_server.py
 
@@ -48,11 +48,11 @@ python socket_client.py
 Cada cliente puede mandar y recibir mensajes. Si desea salir, debe escribir /salir o (CTRL + C) para salir de manera forzada.
 
 
-### ¿Quién sos después de este reto?
+### 🧠¿Quién sos después de este reto?
 En una persona en donde usa herramientas con interfaces bonitos (Whatsapp) a entender el nivel primitivo de la mensajeria.
 
-### ¿Cómo sobrevivió tu aplicación?
+### 🩺¿Cómo sobrevivió tu aplicación?
 Ha base de desiciones tecnicas de hilos independiente, sistema de reconexion que se niega a desconectar y manejo de errores que aparecen como arte de magia.
 
-### ¿Qué aprendiste cuando todo se rompió?
+### 🛠 ¿Qué aprendiste cuando todo se rompió?
 A como manejar los problemas que daba cada ejecucion, los mensajes apilados, textos vacios, fallos de reconexiones, desbordamiento de memoria por mala implementacion de hilos de clientes.

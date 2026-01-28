@@ -1,5 +1,5 @@
 # The_Huddle_Challenge_3_CodePro_4
-"El mundo ha olvidado cómo hablar. Solo vos podés reescribir el protocolo. Bienvenido al Challenge 4."
+"El mundo ha olvidado cómo hablar. Solo vos podés reescribir el protocolo. Bienvenido al Challenge 3."
 
 ## 📖 Descripción:
 El proyecto es una aplicacion de chat grupal en tiempo real desarrollado en Python desde Cero utilizando el modulo Nativo Socket.

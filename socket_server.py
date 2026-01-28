@@ -24,7 +24,6 @@ def manage_client(client_socket, client_address, client_list):
     try:
         while True: # Bucle infinito para recibir mensajes del cliente.
             message = client_socket.recv(1024).decode("utf-8") # Recibe el mensaje del cliente.
-
             if not message: # Si el mensaje esta vacio.
                 break # Sale del bucle.
 

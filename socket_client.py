@@ -31,8 +31,8 @@ def receive_message(client_socket):
 # Funcion para enviar mensajes al server.
 def send_message(client_socket):
     global user_wants_exit # Variable global para controlar la salida del cliente.
-    try:
-        while True: # Bucle infinito para enviar mensajes.
+    while True: # Bucle infinito para enviar mensajes.
+        try:
             message = input("Mensaje (/salir): ") # Solicita el mensaje al usuario.
 
             if message.lower() == "/salir": # Si el usuario quiere salir.
@@ -43,9 +43,10 @@ def send_message(client_socket):
             
             client_socket.send(message.encode("utf-8")) # Envía el mensaje al server.
     
-    except Exception: # Si hay un error al enviar el mensaje.
-        print("Error: Mensaje no enviado") # Mensaje de error.
-        client_socket.close() # Cierra el socket del cliente.
+        except Exception: # Si hay un error al enviar el mensaje.
+            print("Error: Mensaje no enviado") # Mensaje de error.
+            client_socket.close() # Cierra el socket del cliente.
+            break
         
 # Funcion principal donde se conecta al server y crear hilos de envio y recibo de mensajes.
 def main():
